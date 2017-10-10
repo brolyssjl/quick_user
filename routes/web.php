@@ -16,5 +16,8 @@ Route::get('/', function () {
 });
 
 Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');
+Route::group(['middleware' => 'auth'], function(){
+  Route::get('/home', 'HomeController@index')->name('home');
+  Route::get('/usuarios', 'UsersController@index')->name('users_path');
+  Route::get('/usuarios/{user_id}/perfil')->name('user_profile_path');
+});

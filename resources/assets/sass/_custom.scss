@@ -1,0 +1,22 @@
+header, main {
+  padding-left: 300px;
+}
+.container-login {
+  width: 30%;
+}
+.mt-50 {
+  margin-top: 50px;
+}
+.check-remember {
+  margin-left: 5px;
+}
+
+//Media queries
+@media only screen and (max-width : 992px) {
+  header, main {
+    padding-left: 0;
+  }
+  .container-login {
+    width: 70%;
+  }
+}

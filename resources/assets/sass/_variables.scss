@@ -1,0 +1,8 @@
+$primary-color: #F44336 !default;
+$primary-color-light: lighten($primary-color, 15%) !default;
+$primary-color-dark: darken($primary-color, 15%) !default;
+
+$secondary-color: #2196F3 !default;
+$success-color: #4CAF50 !default;
+$error-color: #F44336 !default;
+$link-color: #039be5 !default;
