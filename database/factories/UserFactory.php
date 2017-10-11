@@ -20,7 +20,11 @@ $factory->define(QuickUser\User::class, function (Faker $faker) {
         'name' => $faker->name,
         'email' => $faker->unique()->safeEmail,
         'password' => $password ?: $password = bcrypt('secret'),
-        'phone_number' => $faker->phoneNumber,
+        'phone_number' => $faker->e164PhoneNumber,
+        'active' => 1,
+        'role_id' => random_int(1, 3),
         'remember_token' => str_random(10),
+        'created_at' => $faker->dateTimeThisDecade,
+        'updated_at' => $faker->dateTimeThisDecade
     ];
 });

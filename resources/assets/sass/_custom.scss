@@ -10,7 +10,27 @@ header, main {
 .check-remember {
   margin-left: 5px;
 }
-
+.text-bold {
+  font-weight: bold;
+}
+.invalid-feedback {
+  color: red;
+  margin-left: 3rem;
+  padding-left: 0.75rem;
+  margin-bottom: 0.5rem;
+}
+.collapsible-header {
+  justify-content: space-between;
+  flex-wrap: wrap;
+  & div i {
+    width: 2rem;
+    font-size: 1.6rem;
+    display: inline-block;
+    text-align: center;
+    margin-right: 1rem;
+    vertical-align: bottom;
+  }
+}
 //Media queries
 @media only screen and (max-width : 992px) {
   header, main {

@@ -16,8 +16,27 @@ window.Vue = require('vue');
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-Vue.component('example', require('./components/Example.vue'));
+Vue.component('alert', require('./components/Alert.vue'));
 
 const app = new Vue({
-    el: '#app'
+  el: '#app',
+  methods: {
+    deleteUser: function(event){
+      const option = confirm('Está seguro de borrarlo?');
+      if(option){
+        $(event.currentTarget).find('form').submit();
+      }
+    },
+    disabledInput: function(event){
+      const $input = $('input#password')
+      const $inputConfirm = $('input#confirm-password')
+      if($(event.currentTarget).is(':checked')){
+        $input.prop('disabled', true)
+        $inputConfirm.prop('disabled', true)
+      } else {
+        $input.prop('disabled', false)
+        $inputConfirm.prop('disabled', false)
+      }
+    }
+  }
 });

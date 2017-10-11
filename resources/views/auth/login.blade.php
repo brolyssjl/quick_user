@@ -13,6 +13,9 @@
               <h5>Iniciar Sesión</h5>
             </div>
           </div>
+          @if (session('auth_error'))
+            {{ session('auth_error') }}
+          @endif
           <div class="row">
             <div class="input-field col s12">
               <i class="material-icons prefix">perm_identity</i>
