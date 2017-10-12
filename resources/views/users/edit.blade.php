@@ -40,17 +40,7 @@
     </div>
     <div class="row">
       <div class="input-field col s12">
-        <select name="role_id">
-          <option value="" disabled selected>Seleccione el rol...</option>
-          @foreach ($roles as $role)
-            @if ($user->role_id == $role->id)
-              <option value="{{ $role->id }}" selected>{{ $role->role_name }}</option>
-            @else
-              <option value="{{ $role->id }}">{{ $role->role_name }}</option>
-            @endif
-          @endforeach
-        </select>
-        <label>Rol del usuario</label>
+        @include('partials._role_field')
       </div>
     </div>
     <div class="row">

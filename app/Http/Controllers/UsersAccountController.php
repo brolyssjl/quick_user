@@ -7,6 +7,14 @@ use QuickUser\User;
 
 class UsersAccountController extends Controller
 {
+  /**
+  * Verifies user account by email_verification_token param.
+  * If does not find a user redirects to root path with error message.
+  * If finds a user updates email_verification_token and active fields from User model in verify_email function
+  *
+  * @param String $token
+  * @return Response redirect
+  */
   public function verify($token){
     $user = User::where('email_verification_token', $token)->first();
 

@@ -15,13 +15,25 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+/**
+* Auth Routes
+*/
 Auth::routes();
+/**
+* Facebook Auth
+*/
 Route::get('/auth/facebook', 'SocialAuthController@facebook')->name('facebook_auth');
 Route::get('/auth/facebook/callback', 'SocialAuthController@callback');
 Route::post('/auth/facebook/register', 'SocialAuthController@register');
 
+/**
+* Account verification
+*/
 Route::get('/email/{token}', 'UsersAccountController@verify')->name('email');
 
+/**
+* Group routes for logged in users
+*/
 Route::group(['middleware' => 'auth'], function(){
 
   Route::get('/home', 'HomeController@index')->name('home');

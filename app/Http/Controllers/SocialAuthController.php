@@ -10,10 +10,22 @@ use QuickUser\Notifications\UserFacebookRegistered;
 
 class SocialAuthController extends Controller
 {
+  /**
+  * Connects to Facebook and redirects to the url configurated in facebook app
+  *
+  * @return Response redirect
+  */
   public function facebook(){
     return Socialite::driver('facebook')->redirect();
   }
 
+  /**
+  * Receives a facebook response with the user's credentials and verify if there is a social profile associated with the user.
+  * If the user exists, then it is logged in and redirected to the home.
+  * If the user does not exist, then it is redirected to the registration form with facebook data.
+  *
+  * @return Response
+  */
   public function callback(){
     $user = Socialite::driver('facebook')->user();
 
@@ -32,6 +44,12 @@ class SocialAuthController extends Controller
     return view('users.facebook', ['user' => $user]);
   }
 
+  /**
+  * Creates a new user using data from facebook, but first verifies if the user already have an account
+  *
+  * @param Request $request
+  * @return Response redirect
+  */
   public function register(Request $request){
     $data = session('facebook_user');
 
@@ -61,8 +79,15 @@ class SocialAuthController extends Controller
     return redirect('/')->with('message', 'Hemos enviado un correo a tu dirección de Email para que verifiques tu cuenta.');
   }
 
+  /**
+  * Creates a social profile associated to user
+  *
+  * @param User $user
+  * @param Session data $social_data
+  * @return void
+  */
   private function generate_social_profile(User $user, $social_data){
-    $profile = SocialProfile::create([
+    SocialProfile::create([
       'social_id' => $social_data->id,
       'user_id' => $user->id
     ]);

@@ -54,6 +54,12 @@ class UpdateUserRequest extends FormRequest
       ];
     }
 
+    /**
+    * Gets user id verifying if user id logeed in is equals
+    * to user id from request under validation
+    *
+    * @return user_id
+    */
     private function get_user_id()
     {
       if($this->user->id == $this->route()->user->id) return $this->user->id;
