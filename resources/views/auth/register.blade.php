@@ -1,77 +1,83 @@
 @extends('layouts.app')
-
 @section('content')
-<div class="container">
-    <div class="row">
-        <div class="col-md-8 col-md-offset-2">
-            <div class="panel panel-default">
-                <div class="panel-heading">Register</div>
-
-                <div class="panel-body">
-                    <form class="form-horizontal" method="POST" action="{{ route('register') }}">
-                        {{ csrf_field() }}
-
-                        <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
-                            <label for="name" class="col-md-4 control-label">Name</label>
-
-                            <div class="col-md-6">
-                                <input id="name" type="text" class="form-control" name="name" value="{{ old('name') }}" required autofocus>
-
-                                @if ($errors->has('name'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('name') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
-
-                        <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-                            <label for="email" class="col-md-4 control-label">E-Mail Address</label>
-
-                            <div class="col-md-6">
-                                <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" required>
-
-                                @if ($errors->has('email'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('email') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
-
-                        <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
-                            <label for="password" class="col-md-4 control-label">Password</label>
-
-                            <div class="col-md-6">
-                                <input id="password" type="password" class="form-control" name="password" required>
-
-                                @if ($errors->has('password'))
-                                    <span class="help-block">
-                                        <strong>{{ $errors->first('password') }}</strong>
-                                    </span>
-                                @endif
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="password-confirm" class="col-md-4 control-label">Confirm Password</label>
-
-                            <div class="col-md-6">
-                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <div class="col-md-6 col-md-offset-4">
-                                <button type="submit" class="btn btn-primary">
-                                    Register
-                                </button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
+  <div class="container container-register">
+    <div class="row mt-50">
+      <div class="col s12">
+        <form action="{{ route('register') }}" method="post">
+          {{ csrf_field() }}
+          <div class="row">
+            <div class="input-field col s12 center">
+              <h5>Crear Cuenta</h5>
             </div>
-        </div>
+          </div>
+          <div class="row">
+            @if ($errors->has('name'))
+              @foreach ($errors->get('name') as $error)
+                <div class="invalid-feedback">
+                  {{ $error }}
+                </div>
+              @endforeach
+            @endif
+            <div class="input-field col s12">
+              <i class="material-icons prefix">account_circle</i>
+              <input id="name" type="text" name="name" value="{{ old('name') }}" class="validate @if($errors->has('name')) invalid @endif">
+              <label for="name">Nombre</label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="input-field col s12">
+              <i class="material-icons prefix">phone</i>
+              <input id="phone_number" name="phone_number" value="{{ old('phone_number') }}" type="tel" class="validate">
+              <label for="phone_number">Teléfono</label>
+            </div>
+          </div>
+          <div class="row">
+            @if ($errors->has('email'))
+              @foreach ($errors->get('email') as $error)
+                <div class="invalid-feedback">
+                  {{ $error }}
+                </div>
+              @endforeach
+            @endif
+            <div class="input-field col s12">
+              <i class="material-icons prefix">perm_identity</i>
+              <input id="email" type="email" class="validate @if($errors->has('email'))invalid @endif" name="email" value="{{ old('email') }}" required>
+              <label for="email" data-error="Email inválido" data-success="Ok">Email</label>
+            </div>
+          </div>
+          <div class="row">
+            @if ($errors->has('password'))
+              @foreach ($errors->get('password') as $error)
+                <div class="invalid-feedback">
+                  {{ $error }}
+                </div>
+              @endforeach
+            @endif
+            <div class="input-field col s12">
+              <i class="material-icons prefix">lock_outline</i>
+              <input id="password" type="password" name="password" class="validate @if($errors->has('password'))invalid @endif" required>
+              <label for="password">Password</label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="input-field col s12">
+              <i class="material-icons prefix">lock_outline</i>
+              <input id="password-confirmation" type="password" name="password_confirmation" class="validate @if($errors->has('password'))invalid @endif" required>
+              <label for="password-confirmation">Confirmar Constraseña</label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="input-field col s12">
+              <button class="btn waves-effect waves-light col s12" type="submit">Registrarse<i class="material-icons right">send</i></button>
+            </div>
+          </div>
+          <!--<div class="row">
+            <div class="input-field col s6 m6 l6">
+              <p class="margin left-align medium-small"><a href="">Registro con Facebook</a></p>
+            </div>
+          </div>-->
+        </form>
+      </div>
     </div>
-</div>
+  </div>
 @endsection

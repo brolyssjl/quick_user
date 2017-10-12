@@ -16,7 +16,14 @@ Route::get('/', function () {
 });
 
 Auth::routes();
+Route::get('/auth/facebook', 'SocialAuthController@facebook')->name('facebook_auth');
+Route::get('/auth/facebook/callback', 'SocialAuthController@callback');
+Route::post('/auth/facebook/register', 'SocialAuthController@register');
+
+Route::get('/email/{token}', 'UsersAccountController@verify')->name('email');
+
 Route::group(['middleware' => 'auth'], function(){
+
   Route::get('/home', 'HomeController@index')->name('home');
   Route::get('/usuarios', 'UsersController@index')->name('users_path');
   Route::get('/usuarios/nuevo', 'UsersController@create')->name('create_user_path');
@@ -27,4 +34,5 @@ Route::group(['middleware' => 'auth'], function(){
   Route::get('/usuarios/{user}/activar', 'UsersController@active_user')->name('active_user');
   Route::get('/usuarios/{user}/desactivar', 'UsersController@disable_user')->name('disable_user');
   Route::delete('/usuarios/{user}/borrar', 'UsersController@delete')->name('delete_user_path');
+
 });

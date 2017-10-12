@@ -7,10 +7,10 @@
   <ul class="collapsible popout" data-collapsible="accordion">
     @foreach ($users as $user)
       <li>
-        <div class="collapsible-header white-text text-bold @if($user->actived)red @else grey @endif">
+        <div class="collapsible-header white-text text-bold @if($user->active)red @else grey @endif">
           <div><i class="material-icons">person</i>{{ $user->name }}</div>
           <div>{{ $user->role->role_name }}</div>
-          <div>@if($user->actived) Activo desde {{ date_format($user->created_at, 'd/m/Y') }}@else Desactivado @endif</div>
+          <div>@if($user->active) Activo desde {{ date_format($user->created_at, 'd/m/Y') }}@else Desactivado @endif</div>
         </div>
         <div class="collapsible-body">
           <span><strong>Email:</strong> {{ $user->email }} - <strong>Teléfono de contacto:</strong> {{ $user->phone_number }}</span>

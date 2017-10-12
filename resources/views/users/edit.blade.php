@@ -18,16 +18,9 @@
       </div>
     </div>
     <div class="row">
-      @if ($errors->has('phone_number'))
-        @foreach ($errors->get('phone_number') as $error)
-          <div class="invalid-feedback">
-            {{ $error }}
-          </div>
-        @endforeach
-      @endif
       <div class="input-field col s12">
         <i class="material-icons prefix">phone</i>
-        <input id="phone_number" name="phone_number" value="{{ old('phone_number', $user->phone_number) }}" type="tel" class="validate @if($errors->has('phone_number')) invalid @endif">
+        <input id="phone_number" name="phone_number" value="{{ old('phone_number', $user->phone_number) }}" type="tel" class="validate">
         <label for="phone_number">Teléfono</label>
       </div>
     </div>
@@ -82,14 +75,34 @@
       </div>
     </div>
     <div class="row">
-      <div class="input-field col s12">
-        @if ($user->actived)
-          <a href="{{ route('disable_user', $user->id) }}" class="btn waves-effect waves-light red left">Desactivar Usuario<i class="material-icons right">send</i></a>
-        @else
-          <a href="{{ route('active_user', $user->id) }}" class="btn waves-effect waves-light green left">Activar Usuario<i class="material-icons right">send</i></a>
-        @endif
-        <button type="submit" class="btn waves-effect waves-light right">Actualizar Usuario<i class="material-icons right">send</i></button>
+      <div class="col s12">
+        <button type="submit" class="btn waves-effect waves-light right">Actualizar datos<i class="material-icons right">send</i></button>
       </div>
     </div>
   </form>
+  <div class="divider"></div>
+  <div class="section">
+    <div class="row">
+      <div class="col s12">
+        @if ($user->active)
+          @can ('disable_user', auth()->user())
+            <a href="{{ route('disable_user', $user->id) }}" class="btn waves-effect waves-light blue-grey left">Desactivar cuenta<i class="material-icons right">cancel</i></a>
+          @endcan
+        @else
+          @can ('active_user', auth()->user())
+            <a href="{{ route('active_user', $user->id) }}" class="btn waves-effect waves-light green left">Activar cuenta<i class="material-icons right">check_circle</i></a>
+          @endcan
+        @endif
+        @can ('delete', auth()->user())
+          <a href="#" class="btn waves-effect waves-light red right" v-on:click.prevent="deleteUser($event)">
+            Borrar cuenta<i class="material-icons right">delete</i>
+            <form action="{{ route('delete_user_path', $user->id) }}" method="POST" style="display: none;">
+              {{ csrf_field() }}
+              {{ method_field('DELETE') }}
+            </form>
+          </a>
+        @endcan
+      </div>
+    </div>
+  </div>
 @endsection

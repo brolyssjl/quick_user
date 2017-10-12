@@ -18,16 +18,9 @@
       </div>
     </div>
     <div class="row">
-      @if ($errors->has('phone_number'))
-        @foreach ($errors->get('phone_number') as $error)
-          <div class="invalid-feedback">
-            {{ $error }}
-          </div>
-        @endforeach
-      @endif
       <div class="input-field col s12">
         <i class="material-icons prefix">phone</i>
-        <input id="phone_number" name="phone_number" value="{{ old('phone_number') }}" type="tel" class="validate @if($errors->has('phone_number')) invalid @endif">
+        <input id="phone_number" name="phone_number" value="{{ old('phone_number') }}" type="tel" class="validate">
         <label for="phone_number">Teléfono</label>
       </div>
     </div>

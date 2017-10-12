@@ -1,7 +1,7 @@
 <nav>
   <div class="container">
     <div class="nav-wrapper red">
-      <a href="/" class="brand-logo center">Quick User</a>
+      <a href="/home" class="brand-logo center">Quick User</a>
       <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
     </div>
   </div>
@@ -24,5 +24,7 @@
   </li>
   <li><div class="divider"></div></li>
   <li><a class="subheader">Gestión de Usuarios</a></li>
-  <li><a class="waves-effect" href="{{ route('users_path') }}">Usuarios</a></li>
+  @can ('access_users_list', auth()->user())
+    <li><a class="waves-effect" href="{{ route('users_path') }}"><i class="material-icons left">group</i>Usuarios</a></li>
+  @endcan
 </ul>

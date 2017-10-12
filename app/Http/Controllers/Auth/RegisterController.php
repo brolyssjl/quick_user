@@ -4,8 +4,11 @@ namespace QuickUser\Http\Controllers\Auth;
 
 use QuickUser\User;
 use QuickUser\Http\Controllers\Controller;
+use QuickUser\Notifications\UserRegistered;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
 
 class RegisterController extends Controller
 {
@@ -27,7 +30,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/';
 
     /**
      * Create a new controller instance.
@@ -51,6 +54,16 @@ class RegisterController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:6|confirmed',
+        ],[
+          'name.required' => 'El nombre no puede estar vacío',
+          'name.max' => 'El nombre no puede tener más de 255 caracteres',
+          'email.required' => 'El email no puede estar vacío',
+          'email.email' => 'El email ingresado no es válido',
+          'email.max' => 'El email no puede ser mayor a 255 caracteres.',
+          'email.unique' => 'El email ingresado ya existe',
+          'password.required' => 'La contraseña no puede ser vacía',
+          'password.min' => 'Las contraseña debe ser de mínimo 6 caracteres.',
+          'password.confirmed' => 'Las contraseña no coincide'
         ]);
     }
 
@@ -62,10 +75,31 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => bcrypt($data['password']),
-        ]);
+      $user = User::create([
+        'name' => $data['name'],
+        'email' => $data['email'],
+        'phone_number' => $data['phone_number'],
+        'password' => bcrypt($data['password']),
+        'role_id' => 3,
+        'email_verification_token' => str_random(60)
+      ]);
+
+      $user->notify(new UserRegistered($user, $data['password']));
+
+      return $user;
+    }
+
+    /**
+     * Handle a registration request for the application.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function register(Request $request)
+    {
+        $this->validator($request->all())->validate();
+        $this->create($request->all());
+
+        return redirect('/')->with('message', 'Hemos enviado un correo a tu dirección de Email para que verifiques tu cuenta.');
     }
 }
